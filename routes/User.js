@@ -44,9 +44,11 @@ userRouter.post('/login',passport.authenticate('local',{session : false}), (req,
 userRouter.get('/logout',passport.authenticate('jwt',{session : false}), (req,res)=>{
     res.clearCookie('access_token');
     res.json({user:{username : ""}, success : true})
+    
 })
 
 userRouter.post('/todo',passport.authenticate('jwt',{session : false}), (req,res) =>{
+  console.log(req.isAuthenticated());
   const todo = new Todo(req.body);
   todo.save(err=>{
     if(err)
