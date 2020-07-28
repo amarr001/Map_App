@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { loadModules } from "esri-loader";
+import saveButton from './SaveFunction';
+import Attributes from './AttributesPopUp';
 import "./mapcss.css";
 
 const WebMapView = () => {
@@ -79,23 +81,6 @@ const WebMapView = () => {
       var graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
-      var point = {
-        pointOne: {
-          type: "point",
-          longitude: 138.4897,
-          latitude: -31.4933,
-        },
-        pointTwo: {
-          type: "point",
-          longitude: 136.8998,
-          latitude: -35.2855,
-        },
-        pointThree: {
-          type: "point",
-          longitude: 139.437881,
-          latitude: -35.942116,
-        },
-      };
 
       var simpleMarkerSymbol = {
         type: "simple-marker",
@@ -118,67 +103,31 @@ const WebMapView = () => {
       // ADDS THE CUSTOM ACTION TO POPUP
       view.popup.actions.push(saveFavorite);
 
-      // FUNCTION TO EXECUTE WHEN SAVE BUTTON IS CLICKED
-      function SaveFav() {
-        // in this case the view zooms out two LODs on each click
-        alert("saved!");
-      }
-
       // This event fires for each click on any action
       view.popup.on("trigger-action", function (event) {
         // If the zoom-out action is clicked, fire the zoomOut() function
         if (event.action.id === "save-fav") {
-         SaveFav();
+         saveButton();
         }
       });
-
-      // ATTRIBUTES
-      var attributes = {
-        attrOne: {
-          Name: "My point",
-          Location: "Wilpena Pound - Flinders Ranges ",
-        },
-        attrTwo: {
-          Name: "My point", // The name of the
-          Location: "Cable Bay - Innes National Park", // The owner of the
-        },
-        attrThree: {
-          Name: "My point", // The name of the
-          Location: "Ocean Beach - Coorong National Park", // The owner of the
-        },
-      };
-
-      // POPUP TEMPLATE
+      
+     //FOR LOOP FOR GENERATING POINTS IN THE MAP
+      var i;
+      for (i = 0; i<Attributes.length; i++){
       var popupTemplate = {
-        title: "{Name}",
-        content: "{Location}",
+        title: Attributes[i].Name,
+        content: Attributes[i].Location,
       };
-
       var pointGraphic = new Graphic({
-        geometry: point.pointOne,
+        geometry: Attributes[i].point,
         symbol: simpleMarkerSymbol,
-        attributes: attributes.attrOne,
-        popupTemplate: popupTemplate,
-      });
-      var pointGraphicTwo = new Graphic({
-        geometry: point.pointTwo,
-        symbol: simpleMarkerSymbol,
-        attributes: attributes.attrTwo,
-        popupTemplate: popupTemplate,
-      });
-      var pointGraphicThree = new Graphic({
-        geometry: point.pointThree,
-        symbol: simpleMarkerSymbol,
-        attributes: attributes.attrThree,
-        popupTemplate: popupTemplate,
+        attributes: Attributes[i],
+        popupTemplate: popupTemplate,   
       });
 
       //ADDING POPUPS TO THE POINTS
-      graphicsLayer.add(pointGraphic);
-      graphicsLayer.add(pointGraphicTwo);
-      graphicsLayer.add(pointGraphicThree);
-
-      //FUNCTION THAT SAVES TO FAVORITES
+      graphicsLayer.add(pointGraphic)
+    }
 
       return () => {
         if (view) {
