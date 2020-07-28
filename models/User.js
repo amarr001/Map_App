@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    todos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Todo'}]
+    todos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Todo'}],
+    favorites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Fav'}]
 });
 
 //Only hash new passwords

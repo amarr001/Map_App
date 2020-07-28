@@ -27,6 +27,6 @@
       longitude: 139.437881,
       latitude: -35.942116,
     }  
-  },
+  }
  ]
 export default Attributes;

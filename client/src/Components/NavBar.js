@@ -47,7 +47,7 @@ const NavBar = props => {
       </Nav.Link>
       <Nav.Link href="/todos">
         <li className="nav-item nav-link">
-          Favorites
+          To-dos
         </li>
       </Nav.Link>
       <Nav.Link href="/map">

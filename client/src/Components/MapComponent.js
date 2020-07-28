@@ -1,10 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { loadModules } from "esri-loader";
 import saveButton from './SaveFunction';
 import Attributes from './AttributesPopUp';
+import Favorites from './Favorites';
 import "./mapcss.css";
 
 const WebMapView = () => {
+
+  const [info, setInfo] = useState({Location: ""});
+  const [infoS, setInfoS] = useState([]);
+
   const mapRef = useRef();
 
   useEffect(() => {
@@ -103,13 +108,17 @@ const WebMapView = () => {
       // ADDS THE CUSTOM ACTION TO POPUP
       view.popup.actions.push(saveFavorite);
 
-      // This event fires for each click on any action
       view.popup.on("trigger-action", function (event) {
-        // If the zoom-out action is clicked, fire the zoomOut() function
+        
+        // This event fires for each click on any action
         if (event.action.id === "save-fav") {
-         saveButton();
+        let popupInfo =  view.popup.selectedFeature.attributes.Location
+          return(
+            console.log(popupInfo)
+          )
+       // popupInfo = JSON.stringify(popupInfo);
         }
-      });
+      })
       
      //FOR LOOP FOR GENERATING POINTS IN THE MAP
       var i;
@@ -138,7 +147,14 @@ const WebMapView = () => {
     });
   });
 
-  return <div className="webmap" ref={mapRef} />;
+  return (
+    <div>
+      <div className="webmap" ref={mapRef}/>
+      <div><Favorites/></div>
+    </div>
+    
+  )
+        
 };
 
 export default WebMapView;
