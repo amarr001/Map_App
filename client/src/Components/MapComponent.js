@@ -1,15 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { loadModules } from "esri-loader";
-import saveButton from './SaveFunction';
-import Attributes from './AttributesPopUp';
-import Favorites from './Favorites';
+import Attributes from "./AttributesPopUp";
 import "./mapcss.css";
 
 const WebMapView = () => {
-
-  const [info, setInfo] = useState({Location: ""});
-  const [infoS, setInfoS] = useState([]);
-
   const mapRef = useRef();
 
   useEffect(() => {
@@ -23,6 +18,7 @@ const WebMapView = () => {
         "esri/layers/GraphicsLayer",
       ],
       { css: true }
+
     ).then(([ArcGISMap, MapView, Locate, Graphic, GraphicsLayer]) => {
       const map = new ArcGISMap({
         basemap: "topo-vector",
@@ -38,7 +34,6 @@ const WebMapView = () => {
       });
 
       // LOCATE BUTTON
-
       var locateWidget = new Locate({
         view: view, // Attaches the Locate button to the view
         graphic: new Graphic({
@@ -86,7 +81,6 @@ const WebMapView = () => {
       var graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
-
       var simpleMarkerSymbol = {
         type: "simple-marker",
         color: [226, 119, 40], // orange
@@ -98,45 +92,48 @@ const WebMapView = () => {
 
       // DEFINES AN ACTION TO BUTTON SAVE
       var saveFavorite = {
-        
         title: "Save",
         // The ID FOR REFERENCE TO THE EVENT HANDLER
         id: "save-fav",
-       
-        className: "esri-icon-grant"
+
+        className: "esri-icon-grant",
       };
       // ADDS THE CUSTOM ACTION TO POPUP
       view.popup.actions.push(saveFavorite);
 
       view.popup.on("trigger-action", function (event) {
-        
         // This event fires for each click on any action
         if (event.action.id === "save-fav") {
-        let popupInfo =  view.popup.selectedFeature.attributes.Location
-          return(
-            console.log(popupInfo)
-          )
-       // popupInfo = JSON.stringify(popupInfo);
+          let popupInfo = view.popup.selectedFeature.attributes.Location;
+          console.log(popupInfo);
+          axios.post("/user/dots", popupInfo).then(res => {
+
+          });
+        }
+      });
+
+      //FOR LOOP FOR GENERATING POINTS IN THE MAP
+      axios.get("/user/dots").then(res=>{
+        let dots = res.data;
+        for (var i = 0; i < dots.length; i++) {
+          var popupTemplate = {
+            title: dots[i].Name,
+            content: dots[i].Location,
+          };
+          var pointGraphic = new Graphic({
+            geometry: dots[i].point,
+            symbol: simpleMarkerSymbol,
+            attributes: dots[i],
+            popupTemplate: popupTemplate,
+          });
+  
+          //ADDING POPUPS TO THE POINTS
+          graphicsLayer.add(pointGraphic);
         }
       })
       
-     //FOR LOOP FOR GENERATING POINTS IN THE MAP
-      var i;
-      for (i = 0; i<Attributes.length; i++){
-      var popupTemplate = {
-        title: Attributes[i].Name,
-        content: Attributes[i].Location,
-      };
-      var pointGraphic = new Graphic({
-        geometry: Attributes[i].point,
-        symbol: simpleMarkerSymbol,
-        attributes: Attributes[i],
-        popupTemplate: popupTemplate,   
-      });
-
-      //ADDING POPUPS TO THE POINTS
-      graphicsLayer.add(pointGraphic)
-    }
+      //implementat dot model
+      //implementer seeds do dots model
 
       return () => {
         if (view) {
@@ -147,14 +144,14 @@ const WebMapView = () => {
     });
   });
 
+
+
   return (
     <div>
-      <div className="webmap" ref={mapRef}/>
-      <div><Favorites/></div>
+      <div className="webmap" ref={mapRef} />
+      <div></div>
     </div>
-    
-  )
-        
+  );
 };
 
 export default WebMapView;

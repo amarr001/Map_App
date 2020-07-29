@@ -1,8 +1,10 @@
+import React from 'react';
 import Attributes from './AttributesPopUp';
 
-function saveButton (event) {
-
-
+const saveButton = props =>{
+return(
+<li>lala</li>
+)
 }
 
 export default saveButton;

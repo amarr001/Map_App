@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Favorites = props => {
-  return (
-  <li>{props.info}</li>
+const FavouriteItem = props =>{
+  return(
+    <li>{props}</li>
   )
 }
-export default Favorites;
+
+export default FavouriteItem;
