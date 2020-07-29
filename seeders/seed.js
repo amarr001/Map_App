@@ -44,6 +44,15 @@ let DotSeed = [
       longitude: 138.1870,
       latitude: -35.6140
     }  
+  },
+  {
+    Name: "My point", 
+    Location: "Glamping - Limestone Coast", 
+    point: {
+      type: "point",
+      longitude: 140.8535,
+      latitude: -37.2312
+    }  
   }
  ];
 
