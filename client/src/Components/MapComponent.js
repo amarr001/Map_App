@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { loadModules } from "esri-loader";
-import Attributes from "./AttributesPopUp";
 import "./mapcss.css";
 
 const WebMapView = () => {
@@ -18,7 +17,6 @@ const WebMapView = () => {
         "esri/layers/GraphicsLayer",
       ],
       { css: true }
-
     ).then(([ArcGISMap, MapView, Locate, Graphic, GraphicsLayer]) => {
       const map = new ArcGISMap({
         basemap: "topo-vector",
@@ -72,12 +70,10 @@ const WebMapView = () => {
       });
 
       //ADDING WIDGETS TO THE MAP
-
       view.ui.add(locateWidget, "top-right");
       view.ui.add(coordsWidget, "bottom-right");
 
       // ADD POINTS TO THE MAP
-
       var graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
@@ -106,14 +102,15 @@ const WebMapView = () => {
         if (event.action.id === "save-fav") {
           let popupInfo = view.popup.selectedFeature.attributes.Location;
           console.log(popupInfo);
-          axios.post("/user/dots", popupInfo).then(res => {
-
-          });
+          axios.post("/user/favourite",popupInfo).then((response) => {
+            console.log(response.config.data);
+           
+          }); 
         }
       });
 
       //FOR LOOP FOR GENERATING POINTS IN THE MAP
-      axios.get("/user/dots").then(res=>{
+      axios.get("/user/dots").then((res) => {
         let dots = res.data;
         for (var i = 0; i < dots.length; i++) {
           var popupTemplate = {
@@ -126,12 +123,12 @@ const WebMapView = () => {
             attributes: dots[i],
             popupTemplate: popupTemplate,
           });
-  
+
           //ADDING POPUPS TO THE POINTS
           graphicsLayer.add(pointGraphic);
         }
-      })
-      
+      });
+
       //implementat dot model
       //implementer seeds do dots model
 
@@ -143,8 +140,6 @@ const WebMapView = () => {
       };
     });
   });
-
-
 
   return (
     <div>

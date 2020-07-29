@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
       required: true
     },
     todos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Todo'}],
-    favorites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Fav'}]
+    favourites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Favourite'}]
 });
 
 //Only hash new passwords

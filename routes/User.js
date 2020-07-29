@@ -6,6 +6,7 @@ const JWT = require("jsonwebtoken");
 const User = require("../models/User");
 const Todo = require("../models/Todo");
 const Dot = require("../models/Dots");
+const Favourite = require("../models/Favourite")
 
 const signToken = (userId) => {
   return JWT.sign(
@@ -128,6 +129,42 @@ userRouter.get('/todos',passport.authenticate('jwt',{session : false}), (req,res
     })
   }
 );
+
+userRouter.post(
+  "/favourite",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.isAuthenticated());
+    const favourite = new Favourite(req.body);
+    favourite.save((err) => {
+      if (err)
+        res
+          .status(500)
+          .json({ message: { msgBody: "Error has occured", msgError: true } });
+      else {
+        req.user.favourites.push(favourite);
+        req.user.save((err) => {
+          if (err)
+            res
+              .status(500)
+              .json({
+                message: { msgBody: "Error has occured", msgError: true },
+              });
+          else
+            res
+              .status(200)
+              .json({
+                message: {
+                  msgBody: "Successfully saved location",
+                  msgError: false,
+                },
+              });
+        });
+      }
+    });
+  }
+);
+
 
 userRouter.get(
   "/authenticated",
