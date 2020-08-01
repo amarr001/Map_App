@@ -20,7 +20,8 @@ point:{
   latitude:{
     type: Number
   },
-}
+},
+favourites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Favourite'}]
 });
 
 const Dot = mongoose.model("Dot", DotSchema);

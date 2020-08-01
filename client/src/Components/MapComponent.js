@@ -1,10 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import axios from "axios";
 import { loadModules } from "esri-loader";
 import "./mapcss.css";
 
 const WebMapView = () => {
+const [favourite,setFavourite] = useState({Location: ""});
+const onSaveFav = useCallback(function (event) {
+  // This event fires for each click on any action
+  if (event.action.id === "save-fav") {
+    let popupInfo = viewRef.current.popup.selectedFeature.attributes.Location;
+    console.log(popupInfo);
+    axios.post("user/favourite", popupInfo).then((response)=>{
+      setFavourite(response.config);
+         
+    })
+  }
+  });
+  console.log(favourite.data);
   const mapRef = useRef();
+  const viewRef = useRef();
 
   useEffect(() => {
     // lazy load the required ArcGIS API for JavaScript modules and CSS
@@ -30,6 +44,8 @@ const WebMapView = () => {
         center: [138, -34],
         zoom: 6,
       });
+
+      viewRef.current = view;
 
       // LOCATE BUTTON
       var locateWidget = new Locate({
@@ -97,17 +113,7 @@ const WebMapView = () => {
       // ADDS THE CUSTOM ACTION TO POPUP
       view.popup.actions.push(saveFavorite);
 
-      view.popup.on("trigger-action", function (event) {
-        // This event fires for each click on any action
-        if (event.action.id === "save-fav") {
-          let popupInfo = view.popup.selectedFeature.attributes.Location;
-          console.log(popupInfo);
-          axios.post("/user/favourite",popupInfo).then((response) => {
-            console.log(response.config.data);
-           
-          }); 
-        }
-      });
+      view.popup.on("trigger-action", onSaveFav);
 
       //FOR LOOP FOR GENERATING POINTS IN THE MAP
       axios.get("/user/dots").then((res) => {
@@ -139,12 +145,13 @@ const WebMapView = () => {
         }
       };
     });
-  });
+  },[]);
 
   return (
     <div>
       <div className="webmap" ref={mapRef} />
-      <div></div>
+  <div>{favourite.data}</div>
+
     </div>
   );
 };
