@@ -18,6 +18,8 @@ mongoose.connect('mongodb://localhost:27017/mernauth', {useNewUrlParser : true, 
 const userRouter = require('./routes/User');
 app.use('/user',userRouter);
 
+app.use("*", express.static('client/build'));
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
