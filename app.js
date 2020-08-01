@@ -24,7 +24,7 @@ const userRouter = require('./routes/User');
 app.use('/user',userRouter);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 app.listen(process.env.PORT || 5000, ()=> {
