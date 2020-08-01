@@ -8,8 +8,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build')); 
-  app.use('*', express.static('client/build')); // Added this     
+  app.use(express.static('client/build'));     
 }
 /*
 if (process.env.NODE_ENV === "production") {
@@ -24,7 +23,7 @@ const userRouter = require('./routes/User');
 app.use('/user',userRouter);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
 
 app.listen(process.env.PORT || 5000, ()=> {
