@@ -8,8 +8,8 @@ app.use(cookieParser());
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
-  server.use(express.static('client/build')); 
-  server.use('*', express.static('client/build')); // Added this     
+  app.use(express.static('client/build')); 
+  app.use('*', express.static('client/build')); // Added this     
 }
 /*
 if (process.env.NODE_ENV === "production") {
