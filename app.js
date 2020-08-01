@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost:27017/mernauth', {useNewUrlParser : true, 
   console.log('successfully connected to database');
 });
 
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/User');
 app.use('/user',userRouter);
 
 app.get("*", (req, res) => {
