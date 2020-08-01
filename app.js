@@ -2,6 +2,8 @@ const express = require ('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const path = require("path");
+
 app.use(cookieParser());
 app.use(express.json());
 
