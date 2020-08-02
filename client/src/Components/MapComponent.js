@@ -1,22 +1,35 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import axios from "axios";
 import { loadModules } from "esri-loader";
+import FavItem from "./Sidebar";
+
 import "./mapcss.css";
 
+
+class StaticStore {
+  static dots = [];
+}
+
 const WebMapView = () => {
-const [favourite,setFavourite] = useState({Location: ""});
-const onSaveFav = useCallback(function (event) {
-  // This event fires for each click on any action
-  if (event.action.id === "save-fav") {
-    let popupInfo = viewRef.current.popup.selectedFeature.attributes.Location;
-    console.log(popupInfo);
-    axios.post("user/favourite", popupInfo).then((response)=>{
-      setFavourite(response.config);
-         
-    })
-  }
+  const [favourite, setFavourite] = useState();
+  const [Dots, setDots] = useState([]);
+  const [favouriteS, setfavouriteS] = useState([]);
+  
+
+  const onSaveFav = useCallback(function (event) {
+    // This event fires for each click on any action
+    if (event.action.id === "save-fav") {
+      let popupInfo = viewRef.current.popup.selectedFeature.attributes.Location;
+      axios.post("user/favourite", popupInfo).then((response) => {
+        //setFavourite(response.config.data);
+        console.log();
+      });
+    }
   });
-  console.log(favourite.data);
+
+  
+  
+
   const mapRef = useRef();
   const viewRef = useRef();
 
@@ -118,6 +131,9 @@ const onSaveFav = useCallback(function (event) {
       //FOR LOOP FOR GENERATING POINTS IN THE MAP
       axios.get("/user/dots").then((res) => {
         let dots = res.data;
+        setDots([0, 1, 2, 3]);
+        
+
         for (var i = 0; i < dots.length; i++) {
           var popupTemplate = {
             title: dots[i].Name,
@@ -135,9 +151,6 @@ const onSaveFav = useCallback(function (event) {
         }
       });
 
-      //implementat dot model
-      //implementer seeds do dots model
-
       return () => {
         if (view) {
           // destroy the map view
@@ -145,13 +158,13 @@ const onSaveFav = useCallback(function (event) {
         }
       };
     });
-  },[]);
+  }, []);
+
 
   return (
     <div>
       <div className="webmap" ref={mapRef} />
-  <div>{favourite.data}</div>
-
+        {favourite}
     </div>
   );
 };
