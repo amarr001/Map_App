@@ -4,12 +4,13 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Register from './Register';
+import image from "./background.png";
 
 
 const Home = () => {
   return(
 
-<Jumbotron fluid>
+<Jumbotron fluid style={{backgroundImage: `url(${image}` }}>
   <Container>
   <Row>
     <Col>

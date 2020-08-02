@@ -28,11 +28,6 @@ const NavBar = props => {
             Login
           </li>
         </Nav.Link>
-        <Nav.Link href="/register">
-          <li className="nav-item nav-link">
-            Register
-          </li>
-        </Nav.Link>
         </>
       )
     }

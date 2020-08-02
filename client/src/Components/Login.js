@@ -15,7 +15,7 @@ const Login = props =>{
       if(isAuthenticated){
         authContext.setUser(user);
         authContext.setIsAuthenticated(isAuthenticated);
-        props.history.push('/todos')
+        props.history.push('/map')
       }
       else
         setmessage(message);

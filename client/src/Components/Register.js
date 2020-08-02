@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect} from 'react';
 import AuthService from '../Services/AuthService';
 import Message from '../Components/Message';
+import Container from 'react-bootstrap/Container';
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import image from "./background.png";
 
 const Register = props =>{
   const[user, setUser] = useState({username: "", password: ""})
@@ -21,7 +26,7 @@ const Register = props =>{
       resetForm();
       if(!message.msgError){
         timeID = setTimeout(() =>{
-          props.history.push('/login');
+         props.history.push('/login');
         }, 2000)
       }
     })
@@ -37,6 +42,18 @@ const Register = props =>{
   }
 
   return(
+<>
+<Jumbotron fluid style={{backgroundImage: `url(${image}` }}>
+  <Container>
+  <Row>
+    <Col>
+    <h1>Fluid jumbotron</h1>
+    <p>
+      This is a modified jumbotron that occupies the entire horizontal space of
+      its parent.
+    </p>
+    </Col>
+    <Col sm={4} className="my-1">
     <div>
         <form onSubmit={onSubmit}>
         <h3 className="m-2">Register to Start Exploring</h3>
@@ -63,6 +80,21 @@ const Register = props =>{
       </form>
       {message ? <Message message={message} /> : null}
     </div>
+    </Col>
+    </Row>
+  </Container>
+</Jumbotron>
+<Container>
+       
+        <Row className="justify-content-md-center">
+          <Col md={4}>
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a className="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </Col>
+          </Row>
+</Container>
+ </>   
   )
 }
 
