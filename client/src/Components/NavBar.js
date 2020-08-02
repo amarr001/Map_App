@@ -45,11 +45,6 @@ const NavBar = props => {
           Home
         </li>
       </Nav.Link>
-      <Nav.Link href="/todos">
-        <li className="nav-item nav-link">
-          To-dos
-        </li>
-      </Nav.Link>
       <Nav.Link href="/map">
         <li className="nav-item nav-link">
           Map
@@ -64,7 +59,7 @@ const NavBar = props => {
     }
     return (
       <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">Mapp-App</Navbar.Brand>
+      <Navbar.Brand href="#home">Map-App</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
