@@ -8,6 +8,7 @@ const Todo = require("../models/Todo");
 const Dot = require("../models/Dots");
 const Favourite = require("../models/Favourite");
 const { response } = require("express");
+const { Mongoose } = require("mongoose");
 
 const signToken = (userId) => {
   return JWT.sign(
@@ -140,9 +141,10 @@ userRouter.post(
   "/favourite",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.isAuthenticated());
-    const favourite = new Favourite(req.body)
-    console.log(favourite);
+    
+    const favourite = new Favourite({Location: req.body.location});
+
+
     favourite.save((err) => {
       if (err)
         res
@@ -156,9 +158,10 @@ userRouter.post(
               message: { msgBody: "Error has occured", msgError: true },
             });
           else
+            
             res.status(200).json({
               message: {
-                msgBody: "Successfully saved location",
+                msgBody: req.user.favourites,
                 msgError: false,
               },
             });
@@ -167,6 +170,72 @@ userRouter.post(
     });
   }
 );
+userRouter.get(
+  "/favourites",
+  passport.authenticate("jwt", { session: false }),
+   (req, res) => {
+
+    console.log('---------------------------');
+
+    Favourite.find().then(result => {
+
+      let arr = [];
+      req.user.favourites.forEach(favId => {
+        let favourite = result.find(x => x._id.toString() == favId);
+        if(favourite){
+          arr.push(favourite);
+        }
+      })
+
+      res.status(200).json({
+        message: {
+          msgBody: arr,
+          msgError: false,
+        }
+      });
+
+    })
+
+    userRouter.delete("/favourites/:id", function(req, res) {
+      // var condition = "id = " + req.params.id;
+      // console.log(req.params.id);
+
+      Favourite.deleteOne({ _id: req.params.id }).then(result => {
+        console.log('deleted', result);
+        res.status(200).end();
+      }).catch(err => {
+        console.log('terror', err)
+      });
+
+      // Favourite.deleteOne(condition, function(result) {
+       
+      //   if (result.affectedRows == 0) {
+      //     // If no rows were changed, then the ID must not exist, so 404
+      //     return res.status(404).end();
+      //   } else {
+      //     res.status(200).end();
+      //   }
+      // });
+    });
+
+    // console.log(result.length);
+
+  
+
+    // let q = Favourite.findById(req.user.favourites[0]).findOne((result => {
+    //   console.log(result.length)
+   
+    // }));
+
+    // console.log(req.user.favourites[0])
+    // Favourite.find(req.user.favourites[0], result => {
+    //   console.log(result);
+
+
+    // });
+  })
+
+
 userRouter.get(
   "/authenticated",
   passport.authenticate("jwt", { session: false }),

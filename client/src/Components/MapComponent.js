@@ -5,30 +5,30 @@ import FavItem from "./Sidebar";
 
 import "./mapcss.css";
 
-
 class StaticStore {
   static dots = [];
 }
 
 const WebMapView = () => {
   const [favourite, setFavourite] = useState();
-  const [Dots, setDots] = useState([]);
+  const [dots, setDots] = useState([]);
   const [favouriteS, setfavouriteS] = useState([]);
-  
 
   const onSaveFav = useCallback(function (event) {
     // This event fires for each click on any action
     if (event.action.id === "save-fav") {
       let popupInfo = viewRef.current.popup.selectedFeature.attributes.Location;
-      axios.post("user/favourite", popupInfo).then((response) => {
-        //setFavourite(response.config.data);
-        console.log();
+      axios.post("user/favourite", { location: popupInfo }).then((response) => {
+        axios.get("/user/favourites").then((data) => {
+          let Ids = data.data.message.msgBody;
+          console.log(Ids);
+          setfavouriteS(Ids);
+
+          // })
+        });
       });
     }
   });
-
-  
-  
 
   const mapRef = useRef();
   const viewRef = useRef();
@@ -131,8 +131,8 @@ const WebMapView = () => {
       //FOR LOOP FOR GENERATING POINTS IN THE MAP
       axios.get("/user/dots").then((res) => {
         let dots = res.data;
-        setDots([0, 1, 2, 3]);
-        
+        setDots(dots);
+        StaticStore.dots = dots;
 
         for (var i = 0; i < dots.length; i++) {
           var popupTemplate = {
@@ -149,6 +149,13 @@ const WebMapView = () => {
           //ADDING POPUPS TO THE POINTS
           graphicsLayer.add(pointGraphic);
         }
+        axios.get("/user/favourites").then((data) => {
+          let Ids = data.data.message.msgBody;
+          console.log(Ids);
+          setfavouriteS(Ids);
+
+          // })
+        });
       });
 
       return () => {
@@ -160,11 +167,21 @@ const WebMapView = () => {
     });
   }, []);
 
+  const test = (id) => {
+    axios.delete("user/favourites/" + id).then(() => {
+      // get again, refresh favourites
+      axios.get("/user/favourites").then((data) => {
+        let Ids = data.data.message.msgBody;
+        console.log(Ids);
+        setfavouriteS(Ids);
+      });
+    });
+  };
 
   return (
     <div>
       <div className="webmap" ref={mapRef} />
-        {favourite}
+      <FavItem items={favouriteS} myOnClick={test} />
     </div>
   );
 };
