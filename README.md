@@ -1,4 +1,4 @@
-# Map App
+# Mapp-App
 
 ## Overview
 A web application designed to provide users with an interactive map repository. It allows users to find a location, apply layers and have access to different routes. Additionally, the user can save the information retrieved in their own personalised repository.
