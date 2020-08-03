@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <NavBar />
+      <NavBar/>
       <Route exact path="/Map_App" component={Register} />
       <Route exact path="/" component={Register} />
       <Route exact path="/home" component={Register} />

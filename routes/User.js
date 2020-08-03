@@ -6,8 +6,7 @@ const JWT = require("jsonwebtoken");
 const User = require("../models/User");
 const Dot = require("../models/Dots");
 const Favourite = require("../models/Favourite");
-//const { response } = require("express");
-//const { Mongoose } = require("mongoose");
+
 
 const signToken = (userId) => {
   return JWT.sign(

@@ -34,7 +34,7 @@ const NavBar = (props) => {
 
   const authenticatedNavBar = () => {
     return (
-      <>
+      <div>
         <Nav.Link href="/">
           <li className="nav-item nav-link">Home</li>
         </Nav.Link>
@@ -44,15 +44,13 @@ const NavBar = (props) => {
         <button
           type="button"
           className="btn btn-link nav-item nav-link"
-          onClick={onClickLogoutHandler}
-        >
-          Logout
+          onClick={onClickLogoutHandler}>Logout
         </button>
-      </>
+      </div>
     );
   };
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="xlg">
       <Navbar.Brand href="#home">Mapp-App</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
