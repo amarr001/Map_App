@@ -6,19 +6,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd client && npm run build",
-    "install-client":"cd client && npm install",
-    "heroku-postbuild":"npm run install-client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "dev": "nodemon app.js",
     "server": "nodemon app.js --ignore client",
     "start": "node app.js",
     "seed": "node seeders/seed.js"
-    
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "gh-pages": "^3.1.0",
     "jsonwebtoken": "^8.5.1",

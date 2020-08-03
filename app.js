@@ -3,9 +3,13 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const path = require("path");
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(cors());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));     
