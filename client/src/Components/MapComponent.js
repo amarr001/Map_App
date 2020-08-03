@@ -61,7 +61,7 @@ const WebMapView = () => {
       viewRef.current = view;
 
       // LOCATE BUTTON
-      var locateWidget = new Locate({
+      let locateWidget = new Locate({
         view: view, // Attaches the Locate button to the view
         graphic: new Graphic({
           symbol: { type: "simple-marker" }, // overwrites the default symbol used for the graphic placed at the location of the user when found
@@ -70,7 +70,7 @@ const WebMapView = () => {
 
       //MAP COORDINATES INFO
 
-      var coordsWidget = document.createElement("div");
+      let coordsWidget = document.createElement("div");
       coordsWidget.id = "coordsWidget";
       coordsWidget.className = "esri-widget esri-component";
       coordsWidget.style.padding = "7px 15px 5px";
@@ -78,7 +78,7 @@ const WebMapView = () => {
       view.ui.add(coordsWidget, "bottom-right");
 
       function showCoordinates(pt) {
-        var coords =
+        let coords =
           "Lat/Lon " +
           pt.latitude.toFixed(3) +
           " " +
@@ -103,10 +103,10 @@ const WebMapView = () => {
       view.ui.add(coordsWidget, "bottom-right");
 
       // ADD POINTS TO THE MAP
-      var graphicsLayer = new GraphicsLayer();
+      let graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
-      var simpleMarkerSymbol = {
+      let simpleMarkerSymbol = {
         type: "simple-marker",
         color: [226, 119, 40], // orange
         outline: {
@@ -116,7 +116,7 @@ const WebMapView = () => {
       };
 
       // DEFINES AN ACTION TO BUTTON SAVE
-      var saveFavorite = {
+      let saveFavorite = {
         title: "Save",
         // The ID FOR REFERENCE TO THE EVENT HANDLER
         id: "save-fav",
@@ -134,12 +134,12 @@ const WebMapView = () => {
         setDots(dots);
         StaticStore.dots = dots;
 
-        for (var i = 0; i < dots.length; i++) {
-          var popupTemplate = {
+        for (let i = 0; i < dots.length; i++) {
+          let popupTemplate = {
             title: dots[i].Name,
             content: dots[i].Location,
           };
-          var pointGraphic = new Graphic({
+          let pointGraphic = new Graphic({
             geometry: dots[i].point,
             symbol: simpleMarkerSymbol,
             attributes: dots[i],
@@ -153,8 +153,6 @@ const WebMapView = () => {
           let Ids = data.data.message.msgBody;
           console.log(Ids);
           setfavouriteS(Ids);
-
-          // })
         });
       });
 

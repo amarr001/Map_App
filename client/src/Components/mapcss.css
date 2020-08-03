@@ -1,3 +1,6 @@
 .webmap {
-  height: 400px;
+  height: 350px;;
+}
+.webmap.esri-view {
+  margin-bottom: 20px;
 }
