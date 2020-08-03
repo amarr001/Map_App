@@ -18,7 +18,6 @@ function App() {
       <Route exact path="/home" component={Register} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
-      <PrivateRoute path='/map' component={WebMapView} />
       <Route exact path="/map" component={WebMapView} />
       <Footer/>
     </Router>
