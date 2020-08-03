@@ -7,20 +7,20 @@ const path = require("path");
 app.use(cookieParser());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/mernauth', {useNewUrlParser : true, useUnifiedTopology: true}, ()=>{
-  console.log('successfully connected to database');
-});
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));     
 }
 
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/mernauth', {useNewUrlParser : true, useUnifiedTopology: true}, ()=>{
+  console.log('successfully connected to database');
+});
+
 const userRouter = require('./routes/User');
 app.use('/user',userRouter);
 
-//app.get("*", (req, res) => {
-  //res.sendFile(path.join(__dirname, "./client/build/index.html"));
-//});
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 app.listen(process.env.PORT || 5000, ()=> {
   console.log('express server started');
