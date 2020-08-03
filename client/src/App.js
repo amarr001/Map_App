@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <NavBar/>
-      <Route exact path="/Mapp-App" component={Register} />
+      <Route exact path="/Map_App" component={Register} />
       <Route exact path="/" component={Register} />
       <Route exact path="/home" component={Register} />
       <Route exact path="/login" component={Login} />
