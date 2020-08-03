@@ -8,7 +8,7 @@ Upon loading of the web application the user will be invited to create an accoun
 The user can then save information in the map by clicking on the save button. This will generate a list of the clicked map information and be linked to the user. 
 
 ## Link to Deployed Application
-[View here]()
+[View here](https://map-app-01.herokuapp.com/)
 
 ### Desktop Screenshots
 ![An image of the MapApp Home page on desktop.]()
@@ -16,8 +16,7 @@ The user can then save information in the map by clicking on the save button. Th
 ![An image of the MapApp page on mobile.]()
 
 ## Credits
-HTML & CSS by Ana Marr 
-Javascript by Ana Marr
+HTML & CSS, Javascript by Ana Marr 
 ReactJS is the property of their creators/distributors and I claim no credit in their creation or distribution.
 ArcGIS API is the property of their creators/distributors and I claim no credit in their creation or distribution.
 Bootstrap is the property of their creators/distributors and I claim no credit in their creation or distribution.
