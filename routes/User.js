@@ -197,42 +197,11 @@ userRouter.get(
     })
 
     userRouter.delete("/favourites/:id", function(req, res) {
-      // var condition = "id = " + req.params.id;
-      // console.log(req.params.id);
 
       Favourite.deleteOne({ _id: req.params.id }).then(result => {
-        console.log('deleted', result);
         res.status(200).end();
-      }).catch(err => {
-        console.log('terror', err)
       });
-
-      // Favourite.deleteOne(condition, function(result) {
-       
-      //   if (result.affectedRows == 0) {
-      //     // If no rows were changed, then the ID must not exist, so 404
-      //     return res.status(404).end();
-      //   } else {
-      //     res.status(200).end();
-      //   }
-      // });
     });
-
-    // console.log(result.length);
-
-  
-
-    // let q = Favourite.findById(req.user.favourites[0]).findOne((result => {
-    //   console.log(result.length)
-   
-    // }));
-
-    // console.log(req.user.favourites[0])
-    // Favourite.find(req.user.favourites[0], result => {
-    //   console.log(result);
-
-
-    // });
   })
 
 

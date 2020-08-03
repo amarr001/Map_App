@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from './Components/NavBar';
-import Home from './Components/Home';
 import Login from './Components/Login';
+import Footer from './Components/Footer'
 import Register from './Components/Register';
 import WebMapView from './Components/MapComponent';
 import PrivateRoute from './hocs/PrivateRoute';
@@ -15,10 +15,12 @@ function App() {
       <NavBar/>
       <Route exact path="/Mapp-App" component={Register} />
       <Route exact path="/" component={Register} />
+      <Route exact path="/home" component={Register} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
       <PrivateRoute path='/map' component={WebMapView} />
       <Route exact path="/map" component={WebMapView} />
+      <Footer/>
     </Router>
   );
 }

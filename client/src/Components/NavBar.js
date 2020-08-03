@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import AuthService from '../Services/AuthService';
 import {AuthContext} from '../Context/AuthContext';
 import {Navbar, Nav} from 'react-bootstrap';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 const NavBar = props => {
     const {isAuthenticated, user, setIsAuthenticated, setUser} = useContext(AuthContext);
