@@ -1,0 +1,13 @@
+.headerColour{
+  font-weight: bolder;
+}
+.backContainer{
+  background-color:#cedebd ;
+  color: #411f1f;
+}
+.ItemList{
+  list-style-type: none;
+}
+.alert{
+  width: 40%;
+}

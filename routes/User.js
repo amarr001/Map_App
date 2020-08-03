@@ -4,7 +4,6 @@ const passport = require("passport");
 const passportConfig = require("../passport");
 const JWT = require("jsonwebtoken");
 const User = require("../models/User");
-const Todo = require("../models/Todo");
 const Dot = require("../models/Dots");
 const Favourite = require("../models/Favourite");
 const { response } = require("express");
@@ -73,63 +72,11 @@ userRouter.get(
   }
 );
 
-userRouter.post(
-  "/todo",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log(req.isAuthenticated());
-    const todo = new Todo(req.body);
-    console.log(todo);
-    todo.save((err) => {
-      if (err)
-        res
-          .status(500)
-          .json({ message: { msgBody: "Error has occured", msgError: true } });
-      else {
-        req.user.todos.push(todo);
-        req.user.save((err) => {
-          if (err)
-            res.status(500).json({
-              message: { msgBody: "Error has occured", msgError: true },
-            });
-          else
-            res.status(200).json({
-              message: {
-                msgBody: "Successfully created todo",
-                msgError: false,
-              },
-            });
-        });
-      }
-    });
-  }
-);
-
-userRouter.get(
-  "/todos",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    User.findById({ _id: req.user._id })
-      .populate("todos")
-      .exec((err, document) => {
-        if (err)
-          res
-            .status(500)
-            .json({
-              message: { msgBody: "Error has occured", msgError: true },
-            });
-        else {
-          res.status(200).json({ todos: document.todos, authenticated: true });
-        }
-      });
-  }
-);
-
 userRouter.get(
   "/dots",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-   Dot.find({}).then((response) => {
+    Dot.find({}).then((response) => {
       console.log(response);
 
       res.json(response);
@@ -141,9 +88,7 @@ userRouter.post(
   "/favourite",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    
-    const favourite = new Favourite({Location: req.body.location});
-
+    const favourite = new Favourite({ Location: req.body.location });
 
     favourite.save((err) => {
       if (err)
@@ -158,7 +103,6 @@ userRouter.post(
               message: { msgBody: "Error has occured", msgError: true },
             });
           else
-            
             res.status(200).json({
               message: {
                 msgBody: req.user.favourites,
@@ -173,37 +117,33 @@ userRouter.post(
 userRouter.get(
   "/favourites",
   passport.authenticate("jwt", { session: false }),
-   (req, res) => {
+  (req, res) => {
+    console.log("---------------------------");
 
-    console.log('---------------------------');
-
-    Favourite.find().then(result => {
-
+    Favourite.find().then((result) => {
       let arr = [];
-      req.user.favourites.forEach(favId => {
-        let favourite = result.find(x => x._id.toString() == favId);
-        if(favourite){
+      req.user.favourites.forEach((favId) => {
+        let favourite = result.find((x) => x._id.toString() == favId);
+        if (favourite) {
           arr.push(favourite);
         }
-      })
+      });
 
       res.status(200).json({
         message: {
           msgBody: arr,
           msgError: false,
-        }
+        },
       });
+    });
 
-    })
-
-    userRouter.delete("/favourites/:id", function(req, res) {
-
-      Favourite.deleteOne({ _id: req.params.id }).then(result => {
+    userRouter.delete("/favourites/:id", function (req, res) {
+      Favourite.deleteOne({ _id: req.params.id }).then((result) => {
         res.status(200).end();
       });
     });
-  })
-
+  }
+);
 
 userRouter.get(
   "/authenticated",

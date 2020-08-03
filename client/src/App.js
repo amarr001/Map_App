@@ -1,25 +1,23 @@
-import React from 'react';
-import NavBar from './Components/NavBar';
-import Login from './Components/Login';
-import Footer from './Components/Footer'
-import Register from './Components/Register';
-import WebMapView from './Components/MapComponent';
-import PrivateRoute from './hocs/PrivateRoute';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-
+import React from "react";
+import NavBar from "./Components/NavBar";
+import Login from "./Components/Login";
+import Footer from "./Components/Footer";
+import Register from "./Components/Register";
+import WebMapView from "./Components/MapComponent";
+import PrivateRoute from "./hocs/PrivateRoute";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
-
   return (
     <Router>
-      <NavBar/>
+      <NavBar />
       <Route exact path="/Map_App" component={Register} />
       <Route exact path="/" component={Register} />
       <Route exact path="/home" component={Register} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
       <Route exact path="/map" component={WebMapView} />
-      <Footer/>
+      <Footer />
     </Router>
   );
 }
