@@ -11,9 +11,9 @@ The user can then save information in the map by clicking on the save button. Th
 [View here](https://map-app-01.herokuapp.com/)
 
 ### Desktop Screenshots
-![An image of the MapApp Home page on desktop.]()
+![An image of the MapApp Home page on desktop.](./desktop_mapp_app.png)
 ### Mobile Screenshots
-![An image of the MapApp page on mobile.]()
+![An image of the MapApp page on mobile.](./Mob_Mapp_App.jpeg)
 
 ## Credits
 HTML & CSS, Javascript by Ana Marr 
